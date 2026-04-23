@@ -33,8 +33,8 @@ jobs:
           ssr_pct = float(data['ssr']) * 100
           ssr_str = f"{ssr_pct:.2f}%"
 
-          # total_collateral_usd: string like "15430818226.16..." → "$15.4B"
-          collateral = float(data['total_collateral_usd'])
+          # total_savings_usds_usd: string like "5277179751.70..." → "$5.3B"
+          collateral = float(data['total_savings_usds_usd'])
           collateral_b = collateral / 1_000_000_000
           collateral_str = f"${collateral_b:.1f}B"
 
