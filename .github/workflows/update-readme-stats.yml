@@ -1,0 +1,68 @@
+name: Update README Stats
+
+on:
+  schedule:
+    - cron: '0 * * * *'   # every hour on the hour
+  workflow_dispatch:        # allow manual trigger from the Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  update-stats:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch stats and update README
+        run: |
+          python3 << 'EOF'
+          import urllib.request
+          import json
+          import re
+
+          url = 'https://osero.stablewatch.io/api/sky/summary'
+          with urllib.request.urlopen(url) as response:
+              payload = json.loads(response.read())
+
+          data = payload['data']
+
+          # SSR: string like "0.036500000000000000" → "3.65%"
+          ssr_pct = float(data['ssr']) * 100
+          ssr_str = f"{ssr_pct:.2f}%"
+
+          # total_collateral_usd: string like "15430818226.16..." → "$15.4B"
+          collateral = float(data['total_collateral_usd'])
+          collateral_b = collateral / 1_000_000_000
+          collateral_str = f"${collateral_b:.1f}B"
+
+          with open('README.md', 'r', encoding='utf-8') as f:
+              content = f.read()
+
+          content = re.sub(
+              r'<!-- SSR_START -->.*?<!-- SSR_END -->',
+              f'<!-- SSR_START -->{ssr_str}<!-- SSR_END -->',
+              content
+          )
+          content = re.sub(
+              r'<!-- COLLATERAL_START -->.*?<!-- COLLATERAL_END -->',
+              f'<!-- COLLATERAL_START -->{collateral_str}<!-- COLLATERAL_END -->',
+              content
+          )
+
+          with open('README.md', 'w', encoding='utf-8') as f:
+              f.write(content)
+
+          print(f"SSR: {ssr_str}  |  Collateral: {collateral_str}")
+          EOF
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git diff --staged --quiet && echo "No changes." || (
+            git commit -m "chore: update live stats [skip ci]" &&
+            git push
+          )
