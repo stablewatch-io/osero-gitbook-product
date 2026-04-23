@@ -27,7 +27,7 @@ layout:
 
 ## At a glance
 
-<table data-view="cards"><thead><tr><th></th><th></th><th data-hidden data-card-target data-type="content-ref"></th></tr></thead><tbody><tr><td><strong>Sky Savings Rate</strong></td><td>Yield Source</td><td><a href="https://app.gitbook.com/s/CGGOxx2n6al0aPdL1Zq6/overview/sky-savings-rate">Sky Savings Rate</a></td></tr><tr><td><strong><!-- SSR_START -->3.65%<!-- SSR_END --></strong></td><td>Earn APY</td><td><a href="https://app.gitbook.com/s/CGGOxx2n6al0aPdL1Zq6/overview/sky-savings-rate">Sky Savings Rate</a></td></tr><tr><td><strong><!-- COLLATERAL_START -->$15.4B<!-- COLLATERAL_END --></strong></td><td>Assets Backing Yield</td><td><a href="https://app.gitbook.com/s/CGGOxx2n6al0aPdL1Zq6/features/backing-transparency">Backing Transparency</a></td></tr></tbody></table>
+<table data-view="cards"><thead><tr><th></th><th></th><th data-hidden data-card-target data-type="content-ref"></th></tr></thead><tbody><tr><td><strong>Sky Savings Rate</strong></td><td>Yield Source</td><td><a href="https://app.gitbook.com/s/CGGOxx2n6al0aPdL1Zq6/overview/sky-savings-rate">Sky Savings Rate</a></td></tr><tr><td><strong><!-- SSR_START -->3.65%<!-- SSR_END --></strong></td><td>Earn APY</td><td><a href="https://app.gitbook.com/s/CGGOxx2n6al0aPdL1Zq6/overview/sky-savings-rate">Sky Savings Rate</a></td></tr><tr><td><strong><!-- COLLATERAL_START -->$15.4B<!-- COLLATERAL_END --></strong></td><td>Total Savings</td><td><a href="https://app.gitbook.com/s/CGGOxx2n6al0aPdL1Zq6/features/backing-transparency">Backing Transparency</a></td></tr></tbody></table>
 
 |                           |                                                            |
 | ------------------------- | ---------------------------------------------------------- |
