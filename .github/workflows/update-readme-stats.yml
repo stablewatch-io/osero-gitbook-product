@@ -22,7 +22,7 @@ jobs:
           import json
           import re
 
-          url = 'https://osero.stablewatch.io/api/sky/summary'
+          url = 'https://analytics.osero.org/api/sky/summary'
           req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
           with urllib.request.urlopen(req) as response:
               payload = json.loads(response.read())
