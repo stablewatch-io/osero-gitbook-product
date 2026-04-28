@@ -1,0 +1,40 @@
+name: Check README Markers
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'README.md'
+
+jobs:
+  check-markers:
+    runs-on: ubuntu-latest
+    # Ignore commits made by the stats bot itself
+    if: github.actor != 'github-actions[bot]'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check for markers
+        id: check
+        run: |
+          MISSING=""
+          grep -q '<!-- SSR_START -->'        README.md || MISSING="$MISSING SSR"
+          grep -q '<!-- COLLATERAL_START -->' README.md || MISSING="$MISSING COLLATERAL"
+          if [ -n "$MISSING" ]; then
+            echo "missing=true"  >> $GITHUB_OUTPUT
+            echo "fields=$MISSING" >> $GITHUB_OUTPUT
+          else
+            echo "missing=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Notify Slack
+        if: steps.check.outputs.missing == 'true'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          curl -s -X POST "$SLACK_WEBHOOK_URL" \
+            -H 'Content-type: application/json' \
+            -d "{
+              \"text\": \":warning: <@U08PERYMD54> *README markers stripped* — likely by GitBook editor.\n\nThe following markers are missing: \`${{ steps.check.outputs.fields }}\`\nWithout them the hourly stats update will stop working.\n\n*Commit:* \`${{ github.sha }}\`\n*Author:* ${{ github.actor }}\n*Repo:* ${{ github.repository }}\"
+            }"
